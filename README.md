@@ -24,17 +24,17 @@ Includes a pristine **React + Tailwind CSS** Web Dashboard for real-time visuali
 ## 🏗 Architecture Diagram
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'background': '#f4f4f5'}}}%%
 graph TD
     Client[Client Request] -->|POST /route| Gateway[Express API Gateway]
     
     subgraph Core Routing Engine
-        Gateway --> Filter[Pre-Flight Filter]
-        Filter -->|Check Health, Rate Limits, Timeout| StrategySelector{Strategy Selector}
-        
-        StrategySelector -->|Lowest Cost| CostStrategy[Cost Optimizer]
-        StrategySelector -->|Lowest Latency| LatencyStrategy[Latency Analyzer]
-        StrategySelector -->|Failover Priority| PriorityStrategy[Priority Evaluator]
-        StrategySelector -->|Weighted Traffic| WeightedStrategy[Traffic Distributor]
+        Filter[Pre-Flight Filter]
+        StrategySelector{Strategy Selector}
+        CostStrategy[Cost Optimizer]
+        LatencyStrategy[Latency Analyzer]
+        PriorityStrategy[Priority Evaluator]
+        WeightedStrategy[Traffic Distributor]
     end
 
     subgraph Data & Metrics Store
@@ -43,13 +43,29 @@ graph TD
         CircuitBreaker[Circuit Breaker Engine]
     end
 
-    CostStrategy & LatencyStrategy & PriorityStrategy & WeightedStrategy --> Decision[Target Vendor Selected]
+    Gateway --> Filter
+    Filter -->|Check limits| StrategySelector
     
-    Decision --> Execution[Execute Mock API Call]
+    StrategySelector --> CostStrategy
+    StrategySelector --> LatencyStrategy
+    StrategySelector --> PriorityStrategy
+    StrategySelector --> WeightedStrategy
+
+    Decision[Target Vendor Selected]
+    CostStrategy --> Decision
+    LatencyStrategy --> Decision
+    PriorityStrategy --> Decision
+    WeightedStrategy --> Decision
+    
+    Execution[Execute Mock API Call]
+    Decision --> Execution
     Execution --> |Success/Fail| Tracker
-    Tracker --> |Update Stats & Health| DB
+    Tracker --> DB
     Tracker --> CircuitBreaker
     Execution --> |Return Response| Gateway
+    
+    style Core Routing Engine fill:#e2e8f0,stroke:#94a3b8,stroke-width:2px,color:#000
+    style Data & Metrics Store fill:#e2e8f0,stroke:#94a3b8,stroke-width:2px,color:#000
 ```
 
 ---
