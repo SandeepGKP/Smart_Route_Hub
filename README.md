@@ -24,48 +24,32 @@ Includes a pristine **React + Tailwind CSS** Web Dashboard for real-time visuali
 ## 🏗 Architecture Diagram
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'background': '#f4f4f5'}}}%%
 graph TD
     Client[Client Request] -->|POST /route| Gateway[Express API Gateway]
     
-    subgraph CoreEngine [Core Routing Engine]
-        Filter[Pre-Flight Filter]
-        StrategySelector{Strategy Selector}
-        CostStrategy[Cost Optimizer]
-        LatencyStrategy[Latency Analyzer]
-        PriorityStrategy[Priority Evaluator]
-        WeightedStrategy[Traffic Distributor]
+    subgraph Core Routing Engine
+        Gateway --> Filter[Pre-Flight Filter]
+        Filter -->|Check Health, Rate Limits, Timeout| StrategySelector{Strategy Selector}
+        
+        StrategySelector -->|Lowest Cost| CostStrategy[Cost Optimizer]
+        StrategySelector -->|Lowest Latency| LatencyStrategy[Latency Analyzer]
+        StrategySelector -->|Failover Priority| PriorityStrategy[Priority Evaluator]
+        StrategySelector -->|Weighted Traffic| WeightedStrategy[Traffic Distributor]
     end
 
-    subgraph DataStore [Data & Metrics Store]
+    subgraph Data & Metrics Store
         DB[(MongoDB)]
         Tracker[Live Metrics Tracker]
         CircuitBreaker[Circuit Breaker Engine]
     end
 
-    Gateway --> Filter
-    Filter -->|Check limits| StrategySelector
+    CostStrategy & LatencyStrategy & PriorityStrategy & WeightedStrategy --> Decision[Target Vendor Selected]
     
-    StrategySelector --> CostStrategy
-    StrategySelector --> LatencyStrategy
-    StrategySelector --> PriorityStrategy
-    StrategySelector --> WeightedStrategy
-
-    Decision[Target Vendor Selected]
-    CostStrategy --> Decision
-    LatencyStrategy --> Decision
-    PriorityStrategy --> Decision
-    WeightedStrategy --> Decision
-    
-    Execution[Execute Mock API Call]
-    Decision --> Execution
+    Decision --> Execution[Execute Mock API Call]
     Execution --> |Success/Fail| Tracker
-    Tracker --> DB
+    Tracker --> |Update Stats & Health| DB
     Tracker --> CircuitBreaker
     Execution --> |Return Response| Gateway
-    
-    style CoreEngine fill:#e2e8f0,stroke:#94a3b8,stroke-width:2px,color:#000
-    style DataStore fill:#e2e8f0,stroke:#94a3b8,stroke-width:2px,color:#000
 ```
 
 ---
