@@ -28,7 +28,7 @@ Includes a pristine **React + Tailwind CSS** Web Dashboard for real-time visuali
 graph TD
     Client[Client Request] -->|POST /route| Gateway[Express API Gateway]
     
-    subgraph Core Routing Engine
+    subgraph CoreEngine [Core Routing Engine]
         Filter[Pre-Flight Filter]
         StrategySelector{Strategy Selector}
         CostStrategy[Cost Optimizer]
@@ -37,7 +37,7 @@ graph TD
         WeightedStrategy[Traffic Distributor]
     end
 
-    subgraph Data & Metrics Store
+    subgraph DataStore [Data & Metrics Store]
         DB[(MongoDB)]
         Tracker[Live Metrics Tracker]
         CircuitBreaker[Circuit Breaker Engine]
@@ -64,8 +64,8 @@ graph TD
     Tracker --> CircuitBreaker
     Execution --> |Return Response| Gateway
     
-    style Core Routing Engine fill:#e2e8f0,stroke:#94a3b8,stroke-width:2px,color:#000
-    style Data & Metrics Store fill:#e2e8f0,stroke:#94a3b8,stroke-width:2px,color:#000
+    style CoreEngine fill:#e2e8f0,stroke:#94a3b8,stroke-width:2px,color:#000
+    style DataStore fill:#e2e8f0,stroke:#94a3b8,stroke-width:2px,color:#000
 ```
 
 ---
