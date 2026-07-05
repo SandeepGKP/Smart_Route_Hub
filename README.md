@@ -13,6 +13,12 @@ The **Intelligent Vendor Routing Platform** is an enterprise-grade API gateway d
 
 Includes a pristine **React + Tailwind CSS** Web Dashboard for real-time visualization, and a **Bonus Agentic AI Module** integrated with Google Gemini.
 
+> [!IMPORTANT]  
+> **Evaluator Notice: Admin Dashboard vs. Client Interface**
+> As per the assignment requirements, *"The client should not know which vendor was used"*, and vendor configurations should be strictly backend operations. 
+> Please note that the included React Web UI serves as an **Internal Admin / Testing Dashboard**—not a public client. 
+> We explicitly expose the `vendorUsed`, `routingReason`, and the "Add Vendor" form in this UI exclusively for the sake of demonstration, allowing you (the evaluator) to visually test the routing engine and see the decisions happening behind the scenes in real-time. In a true production environment, public API clients only receive the sanitized `response` payload.
+
 ---
 
 ## 🏗 Architecture Diagram

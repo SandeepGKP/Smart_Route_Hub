@@ -19,7 +19,7 @@ class RoutingEngine {
         let vendors = await Vendor.find({ capability });
         
         if (!vendors || vendors.length === 0) {
-            throw new Error(`No vendors found for capability: ${capability}`);
+            throw new Error(`No service or vendor found for the requested capability: ${capability}`);
         }
 
         // 1. Filter out vendors that have exceeded their rate limit 

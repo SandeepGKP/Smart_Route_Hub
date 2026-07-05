@@ -14,7 +14,7 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  @apply bg-slate-300 text-black antialiased min-h-screen;
+  @apply bg-gray-200 text-black antialiased min-h-screen;
   background-attachment: fixed;
 }
 
