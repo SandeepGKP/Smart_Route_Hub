@@ -7,7 +7,7 @@ exports.suggestRoutingConfig = async (req, res) => {
         if (!prompt) return res.status(400).json({ error: "Prompt is required" });
 
         // Fetch live database metrics to give the AI real-world context
-        const liveVendors = await Vendor.find().select('name metrics capability costPerRequest priority');
+        const liveVendors = await Vendor.find().select('name metrics capability costPerRequest priority weight timeoutMs');
         const liveContext = JSON.stringify(liveVendors);
 
         // Requires GEMINI_API_KEY in .env
@@ -33,13 +33,13 @@ exports.suggestRoutingConfig = async (req, res) => {
           "generated_config": { ... optional JSON object if the user asked you to generate a configuration ... }
         }
         
-        If generating a vendor config, use this format inside generated_config:
-        { "capability": "PAN_VERIFICATION", "name": "VendorName", "weight": 70, "costPerRequest": 1.5, "timeoutMs": 2000, "priority": 1 }
+        If generating a vendor config, you MUST extract the actual requested values from the user's prompt. Use this exact structure for generated_config (use sensible defaults only if the user omits a field):
+        { "capability": "String", "name": "String", "weight": Number, "costPerRequest": Number, "timeoutMs": Number, "priority": Number }
         `;
 
         const result = await model.generateContent(`${systemInstruction}\n\nUser Request: ${prompt}`);
         const text = result.response.text();
-        
+
         // Basic JSON parsing cleanup
         const cleanJson = text.replace(/```json/gi, '').replace(/```/g, '').trim();
         const jsonConfig = JSON.parse(cleanJson);

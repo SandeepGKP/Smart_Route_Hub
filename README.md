@@ -8,6 +8,17 @@
 
 ---
 
+## 📑 Table of Contents
+- [Overview](#-overview)
+- [Architecture Diagram](#-architecture-diagram)
+- [Explanation of Routing Decisions](#-explanation-of-routing-decisions)
+- [Setup & Installation](#-setup--installation)
+- [Sample Vendor Configs (JSON)](#-sample-vendor-configs-json)
+- [Sample API Requests & Responses](#-sample-api-requests--responses)
+- [AI Integration Notice](#-ai-integration-notice)
+
+---
+
 ## 📌 Overview
 The **Intelligent Vendor Routing Platform** is an enterprise-grade API gateway designed to dynamically route incoming traffic across multiple third-party vendors (e.g., PAN Verification, OCR, Face Match). Built with a highly scalable architecture, it evaluates vendor availability in real-time, executing routing decisions based on live health metrics, cost optimization constraints, and priority failovers to guarantee maximum uptime.
 
