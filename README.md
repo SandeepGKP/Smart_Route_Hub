@@ -212,5 +212,5 @@ Bulk insert vendor configurations using `POST /vendors`:
 
 ---
 
-## 🤖 AI Integration Notice
-This repository explicitly utilizes Agentic AI tools to automate complex configuration payloads. Please refer to `AI_USAGE.md` for a detailed breakdown of how AI was utilized for schema generation, routing simulation, and UI structuring.
+<!-- ## 🤖 AI Integration Notice
+This repository explicitly utilizes Agentic AI tools to automate complex configuration payloads. Please refer to `AI_USAGE.md` for a detailed breakdown of how AI was utilized for schema generation, routing simulation, and UI structuring. -->
